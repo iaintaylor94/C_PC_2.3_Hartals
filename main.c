@@ -10,6 +10,8 @@ FILE *gInputFile;
 // Declare Functions
 void usage (char *);
 
+int getNumberOfCases(FILE*);
+
 int main(int argc, char *argv[]) {
   /*-------------------------------FILE INITIALIZATION START-----------------------------*/
   if (argc != 2) usage (argv[0]);
@@ -25,7 +27,8 @@ int main(int argc, char *argv[]) {
 
   /*--------------------------------MAIN PROGRAM START------------------------------------*/
 
-
+  int numberOfCases = getNumberOfCases(gInputFile);
+  printf ("%d", numberOfCases);
 
 
   /*--------------------------------MAIN PROGRAM END--------------------------------------*/
@@ -40,4 +43,12 @@ int main(int argc, char *argv[]) {
 void usage (char *cmd) {
   fprintf (stderr, "usage: %s inputFileName\n", cmd);
   exit (EXIT_SUCCESS);
+}
+
+int getNumberOfCases(FILE* fp) {
+  char inputLine [81];
+  int nc = 0;
+  fgets (inputLine, 81, gInputFile);
+  sscanf (inputLine, "%d", &nc);
+  return (nc);
 }
