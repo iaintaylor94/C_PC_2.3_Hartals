@@ -10,8 +10,13 @@ FILE *gInputFile;
 // Declare Functions
 void usage (char *);
 
-int getNumberOfCases(FILE*);
-int getNumberOfDays(FILE*);
+int getInt(void);
+int getNumberOfCases(void);
+int getNumberOfDays(void);
+int getNumberOfParties(void);
+
+void getHartalNumbers(int[], int);
+void printHartalNumbers(int[], int);
 
 int main(int argc, char *argv[]) {
   /*-------------------------------FILE INITIALIZATION START-----------------------------*/
@@ -28,10 +33,16 @@ int main(int argc, char *argv[]) {
 
   /*--------------------------------MAIN PROGRAM START------------------------------------*/
 
-  int numberOfCases = getNumberOfCases(gInputFile);
+  int numberOfCases = getNumberOfCases();
   printf ("number of cases: %d\n", numberOfCases);
-  int numberOfDays = getNumberOfDays(gInputFile);
+  int numberOfDays = getNumberOfDays();
   printf ("number of days %d\n", numberOfDays);
+  int numberOfParties = getNumberOfParties();
+  printf ("number of parties %d\n", numberOfParties);
+
+  int hartalNumbers[numberOfParties];
+  getHartalNumbers(hartalNumbers, numberOfParties);
+  printHartalNumbers(hartalNumbers, numberOfParties);
 
 
   /*--------------------------------MAIN PROGRAM END--------------------------------------*/
@@ -48,18 +59,32 @@ void usage (char *cmd) {
   exit (EXIT_SUCCESS);
 }
 
-int getNumberOfCases(FILE* fp) {
+int getInt() {
   char inputLine [81];
-  int nc = 0;
+  int returnInt = 0;
   fgets (inputLine, 81, gInputFile);
-  sscanf (inputLine, "%d", &nc);
-  return (nc);
+  sscanf (inputLine, "%d", &returnInt);
+  return (returnInt);
 }
 
-int getNumberOfDays(FILE* fp) {
-  char inputLine [81];
-  int nd = 0;
-  fgets (inputLine, 81, gInputFile);
-  sscanf (inputLine, "%d", &nd);
-  return (nd);
+int getNumberOfCases(void) {
+  return (getInt());
+}
+int getNumberOfDays(void) {
+  return getInt();
+}
+int getNumberOfParties(void) {
+  return getInt();
+}
+void getHartalNumbers(int hartalNumbers[], int numberOfParties) {
+  for (int i = 0; i < numberOfParties; i++) {
+    hartalNumbers[i] = getInt();
+  }
+}
+void printHartalNumbers(int hartalNumbers[], int numberOfParties) {
+  printf ("Hartal array: {");
+  for (int i = 0; i < numberOfParties; i++) {
+    printf (" %d", hartalNumbers[i]);
+  }
+  printf (" }\n");
 }
