@@ -11,6 +11,7 @@ FILE *gInputFile;
 void usage (char *);
 
 int getNumberOfCases(FILE*);
+int getNumberOfDays(FILE*);
 
 int main(int argc, char *argv[]) {
   /*-------------------------------FILE INITIALIZATION START-----------------------------*/
@@ -28,7 +29,9 @@ int main(int argc, char *argv[]) {
   /*--------------------------------MAIN PROGRAM START------------------------------------*/
 
   int numberOfCases = getNumberOfCases(gInputFile);
-  printf ("%d", numberOfCases);
+  printf ("number of cases: %d\n", numberOfCases);
+  int numberOfDays = getNumberOfDays(gInputFile);
+  printf ("number of days %d\n", numberOfDays);
 
 
   /*--------------------------------MAIN PROGRAM END--------------------------------------*/
@@ -51,4 +54,12 @@ int getNumberOfCases(FILE* fp) {
   fgets (inputLine, 81, gInputFile);
   sscanf (inputLine, "%d", &nc);
   return (nc);
+}
+
+int getNumberOfDays(FILE* fp) {
+  char inputLine [81];
+  int nd = 0;
+  fgets (inputLine, 81, gInputFile);
+  sscanf (inputLine, "%d", &nd);
+  return (nd);
 }
