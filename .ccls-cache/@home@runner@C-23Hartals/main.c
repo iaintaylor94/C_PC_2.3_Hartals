@@ -18,6 +18,10 @@ int getNumberOfParties(void);
 void getHartalNumbers(int[], int);
 void printHartalNumbers(int[], int);
 
+int calculateDaysLost(int[], int, int);
+
+void processCase (void);
+
 int main(int argc, char *argv[]) {
   /*-------------------------------FILE INITIALIZATION START-----------------------------*/
   if (argc != 2) usage (argv[0]);
@@ -35,14 +39,10 @@ int main(int argc, char *argv[]) {
 
   int numberOfCases = getNumberOfCases();
   printf ("number of cases: %d\n", numberOfCases);
-  int numberOfDays = getNumberOfDays();
-  printf ("number of days %d\n", numberOfDays);
-  int numberOfParties = getNumberOfParties();
-  printf ("number of parties %d\n", numberOfParties);
 
-  int hartalNumbers[numberOfParties];
-  getHartalNumbers(hartalNumbers, numberOfParties);
-  printHartalNumbers(hartalNumbers, numberOfParties);
+  for (int i = 0; i < numberOfCases; i++) {
+    processCase();
+  }
 
 
   /*--------------------------------MAIN PROGRAM END--------------------------------------*/
@@ -87,4 +87,76 @@ void printHartalNumbers(int hartalNumbers[], int numberOfParties) {
     printf (" %d", hartalNumbers[i]);
   }
   printf (" }\n");
+}
+
+void printDay (int day) {
+  switch (day % 7) {
+    case 0:
+      printf ("Sun ");
+      break;
+    case 1:
+      printf ("Mon ");
+      break;
+    case 2:
+      printf ("Tue ");
+      break;
+    case 3:
+      printf ( "Wed ");
+      break;
+    case 4:
+      printf ("Thu ");
+      break;
+    case 5:
+      printf ("Fri ");
+      break;
+    case 6:
+      printf ("Sat ");
+      break;
+    default:
+      printf ("invalid day\n");
+     break;
+  }
+}
+
+int calculateDaysLost(int hartalNumbers[], int numParties, int numDays) {
+  int daysLost = 0;
+  printf ("ID  Day Hartal\n");
+  printf ("--- --- ------\n");
+  for (int i = 1; i < numDays; i++) {
+    printf ("%3d ", i);
+    printDay (i);
+    if (i % 7 == 5) { // no hartal on Friday
+      printf ("\n");
+      continue; 
+    }
+    else if (i % 7 == 6) { // no hartal on Saturday
+      printf ("\n");
+      continue; 
+    }
+    else {
+      for (int j = 0; j < numParties; j++) {
+        if (i % hartalNumbers[j] == 0) {
+          daysLost++;
+          printf ("     x");
+          break;
+        }
+      }
+      printf ("\n");
+    }
+  }
+  return daysLost;
+}
+
+void processCase (void) {
+  int numberOfDays = getNumberOfDays();
+//  printf ("number of days %d\n", numberOfDays);
+  int numberOfParties = getNumberOfParties();
+//  printf ("number of parties %d\n", numberOfParties);
+
+  int hartalNumbers[numberOfParties];
+  getHartalNumbers(hartalNumbers, numberOfParties);
+//  printHartalNumbers(hartalNumbers, numberOfParties);
+
+  int daysLost = calculateDaysLost(hartalNumbers, numberOfParties, numberOfDays);
+  printf ("days lost: %d\n", daysLost);
 }
